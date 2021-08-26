@@ -1,0 +1,24 @@
+{
+  "name": "fruits-basket",
+  "version": "1.0.0",
+  "description": "The fruits are like movies, bunchs are like shows",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josuels731/fruits-basket.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josuels731/fruits-basket/issues"
+  },
+  "homepage": "https://github.com/josuels731/fruits-basket#readme",
+  "devDependencies": {
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.3.5"
+  }
+}
