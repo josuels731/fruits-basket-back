@@ -1,10 +1,19 @@
-import express, { json, Request, Response, NextFunction } from 'express';
+// Libraries
+import express, { json } from 'express';
 import { createServer } from 'http';
 import cors from 'cors';
-import { log } from './assets/logger';
 
+// Assets
+import { log } from './assets/logger';
+import { requestLogger } from './assets/expressRequestLogger';
+
+// Routes
+import { router } from './routes/root';
+
+// Constant values definition
 const PORT = 80;
 
+// Code
 const server = express();
 const http = createServer(server);
 
@@ -12,14 +21,7 @@ server.use(cors());
 server.use(json());
 server.use(requestLogger)
 
-server.get('/', root)
+server.use('/', router);
+
 http.listen(PORT);
 log(`Server available at port ${PORT}`, 'server_main');
-
-function requestLogger(request: Request, _response: Response, next: NextFunction) {
-  log(`Request on ${request.url}`, 'server_requests');
-  next();
-}
-function root(request: Request, response: Response) {
-  response.send({ url: request.url });
-}
