@@ -1,10 +1,9 @@
+// Assets
 import { log } from './assets/logger';
 
+// Code
 for (let i = 0; i < 20; i++)
   console.log('\n');
-
-
-// log('Welcome to the Fruits Basket, where the fruits are like movies, and the bunchs are like shows', 'index');
 
 log('██     ██ ███████ ██       ██████  ██████  ███    ███ ███████     ████████  ██████      ████████ ██   ██ ███████     ███████ ██████  ██    ██ ██ ████████ ███████     ██████   █████  ███████ ██   ██ ███████ ████████ ', 'index');
 log('██     ██ ██      ██      ██      ██    ██ ████  ████ ██             ██    ██    ██        ██    ██   ██ ██          ██      ██   ██ ██    ██ ██    ██    ██          ██   ██ ██   ██ ██      ██  ██  ██         ██    ', 'index');

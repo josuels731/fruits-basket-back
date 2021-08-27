@@ -1,20 +1,21 @@
-
-interface EnvConfigType {
+// Type Definitions
+interface T_EnvConfig {
   consoleLog: boolean,
   color?: string
 }
 
-type Environments = keyof EnvType;
-
-type EnvType = {
-  index: EnvConfigType,
-  logger_main: EnvConfigType,
-  logger_error: EnvConfigType,
-  server_main: EnvConfigType,
-  server_requests: EnvConfigType,
+type T_EnvType = {
+  index: T_EnvConfig,
+  logger_main: T_EnvConfig,
+  logger_error: T_EnvConfig,
+  server_main: T_EnvConfig,
+  server_requests: T_EnvConfig,
 }
 
-const environments: EnvType = {
+type T_Environments = keyof T_EnvType;
+
+// Constant values definition
+const environments: T_EnvType = {
   index: { consoleLog: true },
   logger_main: { consoleLog: true },
   logger_error: { consoleLog: true },
@@ -35,9 +36,12 @@ const colors = [
   '\x1b[35m\x1b[1m',
   '\x1b[36m\x1b[1m',
 ];
+
+// Variables Definition
 let colorInd = 0;
 
-function log(data: any, source: Environments) {
+// Code
+function log(data: any, source: T_Environments) {
   const conf = environments[source];
   const date = new Date();
   const now = `${date.toLocaleTimeString()}.${date.getMilliseconds().toString().padStart(3, '0')}`.padStart(12, ' ');
@@ -51,7 +55,7 @@ function log(data: any, source: Environments) {
   }
 }
 
-function error(data: any, source: Environments) {
+function error(data: any, source: T_Environments) {
   const conf = environments[source];
   const date = new Date();
   const now = `${date.toLocaleTimeString()}.${date.getMilliseconds().toString().padStart(3, '0')}`.padStart(12, ' ');
@@ -65,7 +69,7 @@ function error(data: any, source: Environments) {
   }
 }
 
-function consoleLog(source: Environments, timestampString: string, data: any, isError: boolean, conf: any) {
+function consoleLog(source: T_Environments, timestampString: string, data: any, isError: boolean, conf: any) {
   const clearColor = '\x1b[0m';
   const errorColor = '\x1b[41m\x1b[1;33m';
   const formattedSource = source.padStart(20, ' ');
@@ -79,7 +83,7 @@ function consoleLog(source: Environments, timestampString: string, data: any, is
   console.log(type, confColor, formattedSource, '-', timestampString, '-', clearColor, data);
 }
 
-function newColor(source: Environments) {
+function newColor(source: T_Environments) {
   if (!colors[colorInd])
     colorInd = 0;
 
