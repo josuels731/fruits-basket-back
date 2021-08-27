@@ -11,6 +11,7 @@ type EnvType = {
   logger_main: EnvConfigType,
   logger_error: EnvConfigType,
   server_main: EnvConfigType,
+  server_requests: EnvConfigType,
 }
 
 const environments: EnvType = {
@@ -18,6 +19,7 @@ const environments: EnvType = {
   logger_main: { consoleLog: true },
   logger_error: { consoleLog: true },
   server_main: { consoleLog: true },
+  server_requests: { consoleLog: true },
 }
 
 const colors = [
