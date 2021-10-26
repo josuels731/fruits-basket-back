@@ -8,7 +8,7 @@ import { log } from './assets/logger';
 import { requestLogger } from './assets/expressRequestLogger';
 
 // Routes
-import { router } from './routes/root';
+import { root } from './routes/root';
 
 // Constant values definition
 const PORT = 80;
@@ -21,7 +21,7 @@ server.use(cors());
 server.use(json());
 server.use(requestLogger)
 
-server.use('/', router);
+server.use('/', root);
 
 http.listen(PORT);
 log(`Server available at port ${PORT}`, 'server_main');
