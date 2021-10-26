@@ -4,12 +4,12 @@ import { createServer } from 'http';
 import cors from 'cors';
 
 // Assets
-import { log } from './assets/logger';
-import { requestLogger } from './assets/expressRequestLogger';
+import { log } from 'assets/logger';
+import { requestLogger } from 'assets/expressRequestLogger';
 
 // Routes
-import { root } from './routes/root';
-import { users } from './routes/users';
+import { root } from 'routes/root';
+import { users } from 'routes/users';
 
 // Constant values definition
 const PORT = 80;

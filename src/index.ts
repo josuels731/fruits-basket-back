@@ -1,4 +1,4 @@
 // App call
-import './startup';
-import './server';
-import './database';
+import 'startup';
+import 'server';
+import 'database';
