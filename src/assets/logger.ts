@@ -10,6 +10,7 @@ type T_EnvType = {
   logger_error: T_EnvConfig,
   server_main: T_EnvConfig,
   server_requests: T_EnvConfig,
+  database_connection: T_EnvConfig,
 }
 
 type T_Environments = keyof T_EnvType;
@@ -21,6 +22,7 @@ const environments: T_EnvType = {
   logger_error: { consoleLog: true },
   server_main: { consoleLog: true },
   server_requests: { consoleLog: true },
+  database_connection: { consoleLog: true },
 }
 
 const colors = [
