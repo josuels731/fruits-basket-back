@@ -1,6 +1,6 @@
 // Libraries
 import { Router, } from "express";
-import { } from './movies.d'
+import { } from './default.d'
 
 // Database Models
 

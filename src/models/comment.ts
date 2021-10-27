@@ -31,4 +31,4 @@ export default model<Comment>(
     })
 );
 
-export type { Comment as Default }
+export type { Comment }
