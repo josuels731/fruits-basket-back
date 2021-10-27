@@ -1,6 +1,6 @@
 // Libraries
 import { connect, connection } from 'mongoose';
-import { error, log } from 'assets/logger';
+import { error, log } from './assets/logger';
 
 // Constant values definition
 const URL = 'mongodb+srv://backend:backend@cluster0.1pzji.mongodb.net/fruitsBasket?retryWrites=true&w=majority'

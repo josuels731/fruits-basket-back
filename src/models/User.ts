@@ -5,10 +5,10 @@ interface User {
     biography: string
     email: string
     password: string
-    following: string[]
-    followers: string[]
-    movies: string[]
-    lastAccess: number
+    following?: string[]
+    followers?: string[]
+    movies?: string[]
+    lastAccess?: number
 }
 
 export default model<User>(
@@ -32,19 +32,25 @@ export default model<User>(
         },
         following: {
             type: [String],
-            required: true,
+            required: false,
+            default: []
         },
         followers: {
             type: [String],
-            required: true,
+            required: false,
+            default: []
         },
         movies: {
             type: [String],
-            required: true,
+            required: false,
+            default: []
         },
         lastAccess: {
             type: Number,
             required: false,
+            default: undefined
         },
     })
 );
+
+export type { User }

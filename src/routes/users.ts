@@ -2,7 +2,7 @@
 import { Router, Request, Response } from "express";
 
 // Database Models
-// import User from 'models/user'
+import User from '../models/user'
 
 // Code
 const users = Router();
@@ -13,13 +13,31 @@ users.get('/', (request: Request, response: Response) => {
 
 interface RequestPostNew extends Request {
   body: {
-    aaa: string
+    name: string
+    biography: string
+    email: string
+    password: string
   }
 }
 interface ResponsePostNew {
+  error?: string
+  email?: string
+  name?: string
 }
-users.post('/new', (request: RequestPostNew, response: Response<ResponsePostNew>) => {
-  response.send({ url: request.url });
+users.post('/new', async (request: RequestPostNew, response: Response<ResponsePostNew>) => {
+  const newUser = new User(request.body);
+
+  try {
+    const save = await newUser.save();
+
+    response.status(201).send({ email: save.email, name: save.name })
+  } catch (e) {
+    if (e instanceof Error)
+      response.status(500).send({ error: e.message })
+    else
+      response.status(500).send({ error: 'Internal Error' })
+
+  }
 });
 
 export { users };
