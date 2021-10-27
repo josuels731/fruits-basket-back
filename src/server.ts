@@ -10,6 +10,7 @@ import { requestLogger } from './assets/expressRequestLogger';
 // Routes
 import { root } from './routes/root';
 import { users } from './routes/users';
+import { movies } from './routes/movies';
 
 // Constant values definition
 const PORT = 80;
@@ -24,6 +25,7 @@ server.use(requestLogger)
 
 server.use('/', root);
 server.use('/users', users);
+server.use('/movies', movies);
 
 http.listen(PORT);
 log(`Server available at port ${PORT}`, 'server_main');
