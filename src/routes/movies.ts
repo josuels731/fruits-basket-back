@@ -8,7 +8,7 @@ import Movie from '../models/movie';
 // Code
 const movies = Router();
 
-movies.get('/', async (request: RequestGet, response: Response<ResponseGet>) => {
+movies.get('/', async (_request: RequestGet, response: Response<ResponseGet>) => {
     try {
         const movies = await Movie.find();
 
