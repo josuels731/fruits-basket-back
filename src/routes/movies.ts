@@ -11,7 +11,6 @@ const movies = Router();
 movies.get('/', async (request: RequestGet, response: Response<ResponseGet>) => {
     try {
         const movies = await Movie.find();
-        console.log(request.params);
 
         if (movies)
             response.status(200).send({ movies: movies });
