@@ -4,7 +4,7 @@
   "description": "The fruits are like movies, bunchs are like shows",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts"
+    "start": "ts-node-dev src/index.ts"
   },
   "repository": {
     "type": "git",
