@@ -8,6 +8,7 @@ interface Movie {
     cast: string[]
     director: string
     trailers: string[]
+    images: string[]
 }
 
 export default model<Movie>(
@@ -38,6 +39,10 @@ export default model<Movie>(
             required: true,
         },
         trailers: {
+            type: [String],
+            required: true,
+        },
+        images: {
             type: [String],
             required: true,
         },
