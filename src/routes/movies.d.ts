@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-interface TmdbResultsPopular {
+interface TmdbMovieData {
     adult: boolean
     backdrop_path: string
     genre_ids: number[]
@@ -17,15 +17,30 @@ interface TmdbResultsPopular {
     vote_count: number
 }
 interface TmdbResponsePopular {
-    results: TmdbResultsPopular[]
+    results: TmdbMovieData[]
     page: number
     total_pages: number
     total_results: number
 }
-
 interface RequestGetDayMostWatched extends Request {
 }
 interface ResponseGetDayMostWatched {
+    movies?: TmdbResultsPopular[],
+    error?: string
+}
+
+interface TmdbResponseSearch {
+    results: TmdbMovieData[]
+    page: number
+    total_pages: number
+    total_results: number
+}
+interface RequestGetSearch extends Request {
+    query: {
+        query: string
+    }
+}
+interface ResponseGetSearch {
     movies?: TmdbResultsPopular[],
     error?: string
 }
