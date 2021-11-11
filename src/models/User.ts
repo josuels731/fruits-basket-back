@@ -1,15 +1,29 @@
 import { model, Schema } from 'mongoose';
 
+interface Movie {
+    id: Schema.Types.ObjectId
+    progress: number,
+}
 interface User {
     name: string
     biography: string
     email: string
     password: string
-    following?: string[]
-    followers?: string[]
-    movies?: string[]
+    following?: Schema.Types.ObjectId[]
+    movies?: Movie[]
     lastAccess?: number
 }
+
+const MovieSchema = new Schema<Movie>({
+    id: {
+        type: Schema.Types.ObjectId,
+        required: true,
+    },
+    progress: {
+        type: Number,
+        required: true
+    }
+});
 
 export default model<User>(
     'Users',
@@ -31,17 +45,13 @@ export default model<User>(
             required: true,
         },
         following: {
-            type: [String],
-            required: false,
-            default: []
-        },
-        followers: {
-            type: [String],
+            type: [Schema.Types.ObjectId],
+            ref: 'Users',
             required: false,
             default: []
         },
         movies: {
-            type: [String],
+            type: [MovieSchema],
             required: false,
             default: []
         },

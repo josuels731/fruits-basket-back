@@ -2,7 +2,7 @@ import { model, Schema } from 'mongoose';
 
 interface Comment {
     user: Schema.Types.ObjectId
-    movie: Schema.Types.ObjectId
+    movie: string
     comment: string
     score: number
 }
@@ -16,8 +16,7 @@ export default model<Comment>(
             required: true,
         },
         movie: {
-            type: Schema.Types.ObjectId,
-            ref: 'Movies',
+            type: String,
             required: true,
         },
         comment: {

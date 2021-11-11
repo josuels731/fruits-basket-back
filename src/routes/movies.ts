@@ -1,20 +1,25 @@
 // Libraries
 import { Router, Response } from "express";
-import { RequestGet, RequestGetId, RequestPostNew, ResponseGet, ResponseGetId, ResponsePostNew } from './movies.d'
+import { Axios } from "axios";
+import { authToken } from "../auth";
+import { RequestGetDayMostWatched, ResponseGetDayMostWatched, TmdbResponsePopular } from "./movies.d";
 
-// Database Models
-import Movie from '../models/movie';
+const MovieDb = new Axios({
+    baseURL: 'https://api.themoviedb.org/3',
+    headers: {
+        Authorization: `Bearer ${authToken}`
+    }
+})
 
 // Code
 const movies = Router();
 
-movies.get('/', async (_request: RequestGet, response: Response<ResponseGet>) => {
+
+movies.get('/dayMostWatched', async (_request: RequestGetDayMostWatched, response: Response<ResponseGetDayMostWatched>) => {
     try {
-        const movies = await Movie.find();
+        const data = JSON.parse((await MovieDb.get('/movie/popular')).data) as TmdbResponsePopular;
 
-        if (movies)
-            response.status(200).send({ movies: movies });
-
+        response.status(200).send({ movies: data.results });
     } catch (e) {
         if (e instanceof Error)
             response.status(500).send({ error: e.message })
@@ -24,37 +29,5 @@ movies.get('/', async (_request: RequestGet, response: Response<ResponseGet>) =>
     }
 });
 
-movies.get('/:id', async (request: RequestGetId, response: Response<ResponseGetId>) => {
-    try {
-        const movie = await Movie.findById(request.params.id)
-
-        if (movie)
-            response.status(200).send({ movie: movie });
-
-    } catch (e) {
-        if (e instanceof Error)
-            response.status(500).send({ error: e.message })
-        else
-            response.status(500).send({ error: 'Internal Error' })
-
-    }
-});
-
-
-movies.post('/new', async (request: RequestPostNew, response: Response<ResponsePostNew>) => {
-    const newMovie = new Movie(request.body);
-
-    try {
-        const save = await newMovie.save();
-
-        response.status(201).send({ name: save.name })
-    } catch (e) {
-        if (e instanceof Error)
-            response.status(500).send({ error: e.message })
-        else
-            response.status(500).send({ error: 'Internal Error' })
-
-    }
-});
 
 export { movies };

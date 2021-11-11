@@ -4,7 +4,7 @@ import { Comment } from '../models/comment'
 
 interface RequestGetMovie extends Request {
     params: {
-        id: Schema.Types.ObjectId
+        id: string
     }
 }
 interface ResponseGetMovie {

@@ -1,27 +1,31 @@
 import { Request, Response } from 'express'
-import { Movie } from '../models/movie'
 
-interface RequestGet extends Request {
+interface TmdbResultsPopular {
+    adult: boolean
+    backdrop_path: string
+    genre_ids: number[]
+    id: number
+    original_language: string
+    original_title: string
+    overview: string
+    popularity: number
+    poster_path: string
+    release_date: string
+    title: string
+    video: boolean
+    vote_average: number
+    vote_count: number
 }
-interface ResponseGet {
-    error?: string,
-    movies?: Movie[]
+interface TmdbResponsePopular {
+    results: TmdbResultsPopular[]
+    page: number
+    total_pages: number
+    total_results: number
 }
 
-interface RequestGetId extends Request {
-    params: {
-        id: string
-    }
+interface RequestGetDayMostWatched extends Request {
 }
-interface ResponseGetId {
-    error?: string,
-    movie?: Movie
-}
-
-interface RequestPostNew extends Request {
-    body: Movie
-}
-interface ResponsePostNew {
-    error?: string,
-    name?: string
+interface ResponseGetDayMostWatched {
+    movies?: TmdbResultsPopular[],
+    error?: string
 }
