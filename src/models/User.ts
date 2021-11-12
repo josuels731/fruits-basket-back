@@ -1,7 +1,7 @@
 import { model, Schema } from 'mongoose';
 
 interface Movie {
-    id: Schema.Types.ObjectId
+    id: number
     progress: number,
 }
 interface User {
@@ -16,7 +16,7 @@ interface User {
 
 const MovieSchema = new Schema<Movie>({
     id: {
-        type: Schema.Types.ObjectId,
+        type: Number,
         required: true,
     },
     progress: {

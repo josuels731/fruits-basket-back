@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { ObjectId } from 'mongoose';
 
 interface TmdbMovieData {
     adult: boolean
@@ -42,5 +43,28 @@ interface RequestGetSearch extends Request {
 }
 interface ResponseGetSearch {
     movies?: TmdbResultsPopular[],
+    error?: string
+}
+
+interface RequestPostAddToList extends Request {
+    body: {
+        user: ObjectId,
+        movie: number
+    }
+}
+interface ResponsePostAddToList {
+    done?: boolean,
+    error?: string
+}
+
+interface RequestPostSetProgress extends Request {
+    body: {
+        user: ObjectId,
+        movie: number,
+        progress: number
+    }
+}
+interface ResponsePostSetProgress {
+    done?: boolean,
     error?: string
 }
