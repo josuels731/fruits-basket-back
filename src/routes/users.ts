@@ -34,7 +34,7 @@ users.post('/login', async (request: RequestPostLogin, response: Response<Respon
     const check = await User.findOne(request.body);
 
     if (check)
-      response.status(201).send({ name: check.name, token: 'token' });
+      response.status(201).send({ name: check.name, token: 'token', id: check._id });
     else
       response.status(401).send({ error: 'Email or Password is Incorrect' })
 

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { ObjectId } from 'mongoose';
 
 interface RequestPostNew extends Request {
     body: {
@@ -24,6 +25,7 @@ interface ResponsePostLogin {
     error?: string
     token?: string
     name?: string
+    id?: ObjectId
 }
 
 interface RequestDelete extends Request {
