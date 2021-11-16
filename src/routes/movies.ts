@@ -2,8 +2,8 @@
 import { Router, Response } from "express";
 import { Axios } from "axios";
 import { authToken } from "../auth";
-import { RequestGetDayMostWatched, RequestGetSearch, RequestPostAddToList, RequestPostSetProgress, ResponseGetDayMostWatched, ResponseGetSearch, ResponsePostAddToList, ResponsePostSetProgress, TmdbResponsePopular, TmdbResponseSearch } from "./movies.d";
-import UserModel from "../models/user";
+import { RequestGetDayMostWatched, RequestGetMyMovies, RequestGetSearch, RequestPostAddToList, RequestPostSetProgress, ResponseGetDayMostWatched, ResponseGetMyMovies, ResponseGetSearch, ResponsePostAddToList, ResponsePostSetProgress, TmdbResponsePopular, TmdbResponseSearch } from "./movies.d";
+import UserModel, { Movie } from "../models/user";
 
 const MovieDb = new Axios({
     baseURL: 'https://api.themoviedb.org/3',
@@ -25,7 +25,6 @@ movies.get('/dayMostWatched', async (_request: RequestGetDayMostWatched, respons
             response.status(500).send({ error: e.message })
         else
             response.status(500).send({ error: 'Internal Error' })
-
     }
 });
 
@@ -54,7 +53,28 @@ movies.post('/addToList', async (request: RequestPostAddToList, response: Respon
             response.status(500).send({ error: e.message })
         else
             response.status(500).send({ error: 'Internal Error' })
+    }
+});
 
+movies.get('/:userId', async (request: RequestGetMyMovies, response: Response<ResponseGetMyMovies>) => {
+    try {
+        const { userId } = request.params;
+        const { notStarted, watching, watched } = request.query;
+
+        let responseData: Movie[] = (await UserModel.findById(userId))?.movies || [];
+        if (notStarted === false)
+            responseData = responseData.filter((data) => data.progress !== 0);
+        if (watching === false)
+            responseData = responseData.filter((data) => data.progress !== 0);
+        if (watched === false)
+            responseData = responseData.filter((data) => data.progress !== 100);
+
+        response.status(200).send({ movies: responseData });
+    } catch (e) {
+        if (e instanceof Error)
+            response.status(500).send({ error: e.message })
+        else
+            response.status(500).send({ error: 'Internal Error' })
     }
 });
 
@@ -74,6 +94,5 @@ movies.patch('/setProgress', async (request: RequestPostSetProgress, response: R
 
     }
 });
-
 
 export { movies };

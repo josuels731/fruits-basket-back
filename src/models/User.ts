@@ -63,4 +63,4 @@ export default model<User>(
     })
 );
 
-export type { User }
+export type { User, Movie }
