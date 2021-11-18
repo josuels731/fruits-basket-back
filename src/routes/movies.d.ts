@@ -109,7 +109,6 @@ interface RequestGetMyMovieData extends Request {
 }
 interface ResponseGetMyMovieData {
     movie?: {
-        // id: number
         progress: number,
         adult?: boolean,
         backdrop_path?: string
