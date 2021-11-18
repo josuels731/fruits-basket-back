@@ -95,7 +95,7 @@ movies.get('/:userId/:movieId', async (request: RequestGetMyMovieData, response:
             return;
         }
 
-        response.status(200).send({ movie: { ...{ progess: movie.progress }, ...tmdbData } });
+        response.status(200).send({ movie: { progress: movie.progress, ...tmdbData } });
     } catch (e) {
         if (e instanceof Error)
             response.status(500).send({ error: e.message })
