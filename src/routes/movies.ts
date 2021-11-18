@@ -2,7 +2,7 @@
 import { Router, Response } from "express";
 import { Axios } from "axios";
 import { authToken } from "../auth";
-import { RequestGetDayMostWatched, RequestGetMyMovies, RequestGetSearch, RequestPostAddToList, RequestPostSetProgress, ResponseGetDayMostWatched, ResponseGetMyMovies, ResponseGetSearch, ResponsePostAddToList, ResponsePostSetProgress, TmdbResponsePopular, TmdbResponseSearch } from "./movies.d";
+import { RequestGetDayMostWatched, RequestGetMyMovieData, RequestGetMyMovies, RequestGetSearch, RequestPostAddToList, RequestPostSetProgress, ResponseGetDayMostWatched, ResponseGetMyMovieData, ResponseGetMyMovies, ResponseGetSearch, ResponsePostAddToList, ResponsePostSetProgress, TmdbFullMovieData, TmdbResponsePopular, TmdbResponseSearch } from "./movies.d";
 import UserModel, { Movie } from "../models/user";
 
 const MovieDb = new Axios({
@@ -62,14 +62,40 @@ movies.get('/:userId', async (request: RequestGetMyMovies, response: Response<Re
         const { notStarted, watching, watched } = request.query;
 
         let responseData: Movie[] = (await UserModel.findById(userId))?.movies || [];
-        if (notStarted === false)
+        if (notStarted === 'false')
             responseData = responseData.filter((data) => data.progress !== 0);
-        if (watching === false)
+        if (watching === 'false')
             responseData = responseData.filter((data) => data.progress !== 0);
-        if (watched === false)
+        if (watched === 'false')
             responseData = responseData.filter((data) => data.progress !== 100);
 
         response.status(200).send({ movies: responseData });
+    } catch (e) {
+        if (e instanceof Error)
+            response.status(500).send({ error: e.message })
+        else
+            response.status(500).send({ error: 'Internal Error' })
+    }
+});
+
+movies.get('/:userId/:movieId', async (request: RequestGetMyMovieData, response: Response<ResponseGetMyMovieData>) => {
+    try {
+        const { userId, movieId } = request.params;
+
+        const responseData: Movie[] = (await UserModel.findById(userId).lean())?.movies || [];
+
+        const movie = responseData.find(movie => movie.id === Number(movieId));
+        if (!movie) {
+            response.status(404).send({ error: 'Movie internal not found' });
+            return;
+        }
+        const tmdbData = JSON.parse((await MovieDb.get(`/movie/${movieId}`)).data) as TmdbFullMovieData;
+        if (!tmdbData) {
+            response.status(404).send({ error: 'Movie tmdb not found' });
+            return;
+        }
+
+        response.status(200).send({ movie: { ...{ progess: movie.progress }, ...tmdbData } });
     } catch (e) {
         if (e instanceof Error)
             response.status(500).send({ error: e.message })

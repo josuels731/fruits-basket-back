@@ -29,5 +29,6 @@ server.use('/users', users);
 server.use('/movies', movies);
 server.use('/comments', comments);
 
+
 http.listen(PORT);
 log(`Server available at port ${PORT}`, 'server_main');
